@@ -11,22 +11,60 @@ class Tree:
         self.right = Tree(data)
 
     def print_data(self):
-        print(self.data, end="")
+        print(self.data, end=" ")
         if self.left:
+            print("{}-L-".format(self.data), end="")
             self.left.print_data()
         if self.right:
+            print("{}-R-".format(self.data), end="")
             self.right.print_data()
 
     def add(self, ip):
-        for x in ip:
-            if x == "0":
-                if self.left is None:
-                    self._add_left(x)
-                self = self.left
+        i = 0
+        while i < len(ip):
+            flag = False
+            if len(self.data) > 1:
+                for j, y in enumerate(self.data):
+                    if y == ip[i+j-1]:
+                        continue
+                    else:
+                        if ip[i+j-1] == "0":
+                            temp = Tree(self.data[j:])
+                            temp.left = self.left
+                            temp.right = self.right
+                            self.right = temp
+                            self.data = self.data[:j]
+                            self._add_left(ip[i+j-1:])
+                            flag = True
+                            break
+                        else:
+                            temp = Tree(self.data[j:])
+                            temp.left = self.left
+                            temp.right = self.right
+                            self.left = temp
+                            self.data = self.data[:j]
+                            self._add_right(ip[i+j-1:])
+                            flag = True
+                            break
+                if flag:
+                    break
+                if ip[i] == "0":
+                    self = self.left
+                else:
+                    self = self.right
+                i += j
             else:
-                if self.right is None:
-                    self._add_right(x)
-                self = self.right
+                if ip[i] == "0":
+                    if self.left is None:
+                        self._add_left(ip[i:])
+                        break
+                    self = self.left
+                else:
+                    if self.right is None:
+                        self._add_right(ip[i:])
+                        break
+                    self = self.right
+            i += 1
 
     def check_data(self, data):
         if len(data) == 1:
@@ -52,19 +90,23 @@ def get_binary_ip(ip):
 
 if __name__ == "__main__":
     tree = Tree("N")
-    ip = get_binary_ip("192.168.0.153")
-    ip2 = get_binary_ip("192.168.0.152")
-    ip3 = get_binary_ip("192.168.0.155")
-    ip4 = get_binary_ip("192.168.0.154")
+    ip = get_binary_ip("192.168.0.152")
+    ip2 = get_binary_ip("192.168.0.153")
+    ip3 = get_binary_ip("192.168.0.154")
+    ip4 = get_binary_ip("192.168.0.155")
+    ip5 = get_binary_ip("192.168.128.155")
 
     tree.add(ip)
+    tree.print_data()
 
-    print(tree.check_data("N"+ip))
-    print(tree.check_data("N"+ip2))
-
-    temp = tree
     tree.add(ip2)
-    print(tree.check_data("N"+ip))
-    print(tree.check_data("N"+ip2))
-    print(tree.check_data("N"+ip3))
-    print(tree.check_data("N"+ip4))
+    tree.print_data()
+
+    tree.add(ip3)
+    tree.print_data()
+
+    tree.add(ip4)
+    tree.print_data()
+
+    tree.add(ip5)
+    tree.print_data()
