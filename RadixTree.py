@@ -13,13 +13,12 @@ class Tree:
     def print_data(self):
         print(self.data, end=" ")
         if self.left:
-            print("{}-L-".format(self.data), end="")
             self.left.print_data()
         if self.right:
-            print("{}-R-".format(self.data), end="")
             self.right.print_data()
 
     def add(self, ip):
+        print("IP: ", ip)
         i = 0
         while i < len(ip):
             flag = False
@@ -29,19 +28,19 @@ class Tree:
                         continue
                     else:
                         if ip[i+j-1] == "0":
-                            temp = Tree(self.data[j:])
-                            temp.left = self.left
-                            temp.right = self.right
-                            self.right = temp
+                            split_node = Tree(self.data[j:])
+                            split_node.left = self.left
+                            split_node.right = self.right
+                            self.right = split_node
                             self.data = self.data[:j]
                             self._add_left(ip[i+j-1:])
                             flag = True
                             break
                         else:
-                            temp = Tree(self.data[j:])
-                            temp.left = self.left
-                            temp.right = self.right
-                            self.left = temp
+                            split_node = Tree(self.data[j:])
+                            split_node.left = self.left
+                            split_node.right = self.right
+                            self.left = split_node
                             self.data = self.data[:j]
                             self._add_right(ip[i+j-1:])
                             flag = True
@@ -66,19 +65,28 @@ class Tree:
                     self = self.right
             i += 1
 
-    def check_data(self, data):
-        if len(data) == 1:
-            return True
-        if data[1] == "0":
-            if self.left:
-                return self.left.check_data(data[1:])
+    def check_data(self, ip):
+        i = 0
+        # We iterate till 32 as we need to exclude the root node
+        while i <= 32:
+            if len(self.data) == 1:
+                if ip[i] != self.data:
+                    return False
+            elif len(self.data) > 1:
+                for j, bit in enumerate(self.data):
+                    if ip[i+j] == bit:
+                        continue
+                    else:
+                        return False
+                i += j
+            if i == 32:
+                return True
+            if ip[i + 1] == "0":
+                self = self.left
             else:
-                return False
-        elif data[1] == "1":
-            if self.right:
-                return self.right.check_data(data[1:])
-            else:
-                return False
+                self = self.right
+            i += 1
+        return True
 
 
 def get_binary_ip(ip):
@@ -98,15 +106,34 @@ if __name__ == "__main__":
 
     tree.add(ip)
     tree.print_data()
+    print(tree.check_data("N"+ip))
+    print(tree.check_data("N"+ip2))
 
     tree.add(ip2)
     tree.print_data()
+    print(tree.check_data("N"+ip))
+    print(tree.check_data("N"+ip2))
+    print(tree.check_data("N"+ip3))
 
     tree.add(ip3)
     tree.print_data()
+    print(tree.check_data("N"+ip))
+    print(tree.check_data("N"+ip2))
+    print(tree.check_data("N"+ip3))
+    print(tree.check_data("N"+ip4))
 
     tree.add(ip4)
     tree.print_data()
+    print(tree.check_data("N"+ip))
+    print(tree.check_data("N"+ip2))
+    print(tree.check_data("N"+ip3))
+    print(tree.check_data("N"+ip4))
+    print(tree.check_data("N"+ip5))
 
     tree.add(ip5)
     tree.print_data()
+    print(tree.check_data("N"+ip))
+    print(tree.check_data("N"+ip2))
+    print(tree.check_data("N"+ip3))
+    print(tree.check_data("N"+ip4))
+    print(tree.check_data("N"+ip5))
