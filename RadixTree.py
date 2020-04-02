@@ -17,7 +17,22 @@ class RadixTree:
         if self.right:
             self.right.print_data()
 
-    def add(self, ip):
+    def _verify(self, ip):
+        valid_len = False
+        valid_ip = False
+        if len(ip.split(".")) == 4:
+            valid_len = True
+        if valid_len:
+            binary_ip = self._to_binary(ip)
+            if len(binary_ip) == 32:
+                valid_ip = True
+        return valid_ip and valid_len
+
+    def add_ip(self, ip):
+        self._verify(ip)
+        self._add(ip)
+
+    def _add(self, ip):
         i = 0
         while i < len(ip):
             flag = False
@@ -65,6 +80,7 @@ class RadixTree:
             i += 1
 
     def remove(self, ip):
+        self._verify(ip)
         i = 0
         prev_node = []
         # We iterate till 32 as we need to exclude the root node
@@ -128,42 +144,41 @@ class RadixTree:
             i += 1
         return True
 
-
-def get_binary_ip(ip):
-    binary_ip = ""
-    for x in ip.split("."):
-        binary_ip += f'{int(x):08b}'
-    return binary_ip
+    def _to_binary(self, ip):
+        binary_ip = ""
+        for x in ip.split("."):
+            binary_ip += f'{int(x):08b}'
+        return binary_ip
 
 
 if __name__ == "__main__":
     tree = RadixTree("N")
-    ip = get_binary_ip("192.168.0.152")
-    ip2 = get_binary_ip("192.168.0.153")
-    ip3 = get_binary_ip("192.168.0.154")
-    ip4 = get_binary_ip("192.168.0.155")
-    ip5 = get_binary_ip("192.168.128.155")
-    ip6 = get_binary_ip("192.168.128.127")
+    ip = "192.168.0.152"
+    ip2 = "192.168.0.153"
+    ip3 = "192.168.0.154"
+    ip4 = "192.168.0.155"
+    ip5 = "192.168.128.155"
+    ip6 = "192.168.128.127"
 
-    tree.add(ip)
+    tree.add_ip(ip)
     tree.print_data()
     print(tree.check_data("N"+ip))
     print(tree.check_data("N"+ip2))
 
-    tree.add(ip2)
+    tree.add_ip(ip2)
     tree.print_data()
-    print(tree.check_data("N"+ip))
-    print(tree.check_data("N"+ip2))
-    print(tree.check_data("N"+ip3))
+    print(tree.check_data("N" + ip))
+    print(tree.check_data("N" + ip2))
+    print(tree.check_data("N" + ip3))
 
-    tree.add(ip3)
+    tree.add_ip(ip3)
     tree.print_data()
     print(tree.check_data("N"+ip))
     print(tree.check_data("N"+ip2))
     print(tree.check_data("N"+ip3))
     print(tree.check_data("N"+ip4))
 
-    tree.add(ip4)
+    tree.add_ip(ip4)
     tree.print_data()
     print(tree.check_data("N"+ip))
     print(tree.check_data("N"+ip2))
@@ -171,7 +186,7 @@ if __name__ == "__main__":
     print(tree.check_data("N"+ip4))
     print(tree.check_data("N"+ip5))
 
-    tree.add(ip5)
+    tree.add_ip(ip5)
     tree.print_data()
     print(tree.check_data("N"+ip))
     print(tree.check_data("N"+ip2))
