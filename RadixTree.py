@@ -17,22 +17,10 @@ class RadixTree:
         if self.right:
             self.right.print_data()
 
-    def _verify(self, ip):
-        valid_len = False
-        valid_ip = False
-        if len(ip.split(".")) == 4:
-            valid_len = True
-        if valid_len:
-            binary_ip = self._to_binary(ip)
-            if len(binary_ip) == 32:
-                valid_ip = True
-        return valid_ip and valid_len
+    def add(self, ip):
+        self._add_ip(self._to_binary(ip))
 
-    def add_ip(self, ip):
-        self._verify(ip)
-        self._add(ip)
-
-    def _add(self, ip):
+    def _add_ip(self, ip):
         i = 0
         while i < len(ip):
             flag = False
@@ -80,7 +68,9 @@ class RadixTree:
             i += 1
 
     def remove(self, ip):
-        self._verify(ip)
+        return self._remove_ip("N" + self._to_binary(ip))
+
+    def _remove_ip(self, ip):
         i = 0
         prev_node = []
         # We iterate till 32 as we need to exclude the root node
@@ -115,7 +105,10 @@ class RadixTree:
                     return False
             i += 1
 
-    def check_data(self, ip):
+    def is_present(self, ip):
+        return self._check_data("N" + self._to_binary(ip))
+
+    def _check_data(self, ip):
         i = 0
         # We iterate till 32 as we need to exclude the root node
         while i <= 32:
@@ -149,57 +142,3 @@ class RadixTree:
         for x in ip.split("."):
             binary_ip += f'{int(x):08b}'
         return binary_ip
-
-
-if __name__ == "__main__":
-    tree = RadixTree("N")
-    ip = "192.168.0.152"
-    ip2 = "192.168.0.153"
-    ip3 = "192.168.0.154"
-    ip4 = "192.168.0.155"
-    ip5 = "192.168.128.155"
-    ip6 = "192.168.128.127"
-
-    tree.add_ip(ip)
-    tree.print_data()
-    print(tree.check_data("N"+ip))
-    print(tree.check_data("N"+ip2))
-
-    tree.add_ip(ip2)
-    tree.print_data()
-    print(tree.check_data("N" + ip))
-    print(tree.check_data("N" + ip2))
-    print(tree.check_data("N" + ip3))
-
-    tree.add_ip(ip3)
-    tree.print_data()
-    print(tree.check_data("N"+ip))
-    print(tree.check_data("N"+ip2))
-    print(tree.check_data("N"+ip3))
-    print(tree.check_data("N"+ip4))
-
-    tree.add_ip(ip4)
-    tree.print_data()
-    print(tree.check_data("N"+ip))
-    print(tree.check_data("N"+ip2))
-    print(tree.check_data("N"+ip3))
-    print(tree.check_data("N"+ip4))
-    print(tree.check_data("N"+ip5))
-
-    tree.add_ip(ip5)
-    tree.print_data()
-    print(tree.check_data("N"+ip))
-    print(tree.check_data("N"+ip2))
-    print(tree.check_data("N"+ip3))
-    print(tree.check_data("N"+ip4))
-    print(tree.check_data("N"+ip5))
-
-    print("Removal", tree.remove("N" + ip3))
-    print("Removal", tree.remove("N" + ip5))
-    print("Removal", tree.remove("N" + ip6))
-    tree.print_data()
-    print(tree.check_data("N" + ip))
-    print(tree.check_data("N" + ip2))
-    print(tree.check_data("N" + ip3))
-    print(tree.check_data("N" + ip4))
-    print(tree.check_data("N" + ip5))
