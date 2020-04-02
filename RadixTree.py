@@ -10,15 +10,21 @@ class RadixTree:
     def _add_right(self, data):
         self.right = RadixTree(data)
 
-    def print_data(self):
+    # For development purpose alone
+    def _print_data(self):
         print(self.data, end=" ")
         if self.left:
             self.left.print_data()
         if self.right:
             self.right.print_data()
 
-    def add(self, ip):
-        self._add_ip(self._to_binary(ip))
+    '''
+    :argument ip, Accepts an IP as a string
+    :return True, if element added successfully
+            False, if failed
+    '''
+    def add(self, ip) -> bool:
+        return self._add_ip(self._to_binary(ip))
 
     def _add_ip(self, ip):
         i = 0
@@ -66,9 +72,15 @@ class RadixTree:
                         break
                     self = self.right
             i += 1
+        return flag
 
-    def remove(self, ip):
-        return self._remove_ip("N" + self._to_binary(ip))
+    '''
+    :argument ip, Accepts an IP as a string
+    :return True, if element was removed
+            False, if failed, or if element not present
+    '''
+    def remove(self, ip) -> bool:
+        self._remove_ip("N" + self._to_binary(ip))
 
     def _remove_ip(self, ip):
         i = 0
@@ -83,29 +95,34 @@ class RadixTree:
                     if ip[i+j] == bit:
                         continue
                     else:
-                        return False
+                        return
                 i += j
             if i == 32:
                 if prev_node[1] == "L":
                     prev_node[0].left = None
                 else:
                     prev_node[0].right = None
-                return True
+                return
             if ip[i + 1] == "0":
                 prev_node = [self, "L"]
                 if self.left:
                     self = self.left
                 else:
-                    return False
+                    return
             else:
                 prev_node = [self, "R"]
                 if self.right:
                     self = self.right
                 else:
-                    return False
+                    return
             i += 1
 
-    def is_present(self, ip):
+    '''
+    :argument ip, Accepts an IP as a string
+    :return True, if element is present
+            False, if not present
+    '''
+    def is_present(self, ip) -> bool:
         return self._check_data("N" + self._to_binary(ip))
 
     def _check_data(self, ip):
