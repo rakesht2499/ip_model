@@ -23,8 +23,9 @@ class RadixTree:
     :return True, if element added successfully
             False, if failed
     '''
-    def add(self, ip) -> bool:
-        return self._add_ip(self._to_binary(ip))
+
+    def add(self, ip):
+        return self._add_ip(ip)
 
     def _add_ip(self, ip):
         i = 0
@@ -80,7 +81,7 @@ class RadixTree:
             False, if failed, or if element not present
     '''
     def remove(self, ip) -> bool:
-        self._remove_ip("N" + self._to_binary(ip))
+        self._remove_ip("N" + ip)
 
     def _remove_ip(self, ip):
         i = 0
@@ -123,7 +124,7 @@ class RadixTree:
             False, if not present
     '''
     def is_present(self, ip) -> bool:
-        return self._check_data("N" + self._to_binary(ip))
+        return self._check_data("N" + ip)
 
     def _check_data(self, ip):
         i = 0
@@ -154,8 +155,3 @@ class RadixTree:
             i += 1
         return True
 
-    def _to_binary(self, ip):
-        binary_ip = ""
-        for x in ip.split("."):
-            binary_ip += f'{int(x):08b}'
-        return binary_ip

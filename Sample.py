@@ -1,7 +1,7 @@
-from RadixTree import RadixTree
+from Blacklist import Blacklist
 
 if __name__ == "__main__":
-    tree = RadixTree("N")
+    tree = Blacklist()
     ip = "192.168.0.152"
     ip2 = "192.168.0.153"
     ip3 = "192.168.0.154"
