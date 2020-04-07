@@ -1,7 +1,7 @@
-from Blacklist import Blacklist
+from Ipv4 import Ipv4
 
 if __name__ == "__main__":
-    tree = Blacklist()
+    tree = Ipv4()
     ip = "192.168.0.152"
     ip2 = "192.168.0.153"
     ip3 = "192.168.0.154"
