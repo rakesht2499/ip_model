@@ -1,7 +1,7 @@
 from util.RadixTree import RadixTree
 
 
-class Blacklist:
+class Ipv4:
     def __init__(self):
         self.head = RadixTree("N")
 

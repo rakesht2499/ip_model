@@ -1,6 +1,6 @@
-# Blacklist
+# Ip-Model
 
-A simple implementation of RadixTree used for efficiently storing and checking in O(1) time for all Ipv4 addresses.
+A simple implementation of RadixTree used for efficiently for storing, removing and checking in O(1) time for all Ipv4 addresses.
 
 ## How to run sample program
 
@@ -16,9 +16,9 @@ python3 Sample.py
 
 Initialization
 ```python
-from Blacklist import Blacklist
+from ip_model import Ipv4
 
-blasklist = Blacklist()
+blasklist = Ipv4.Ipv4()
 ```
 
 Adding an IP
