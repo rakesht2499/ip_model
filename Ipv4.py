@@ -1,23 +1,11 @@
 from ip_model.util.RadixTree import RadixTree
+from ip_model.util.Validator import Validator
+validate = Validator.validate
+
 
 class Ipv4:
     def __init__(self):
         self.head = RadixTree("N")
-
-    def validate(f):
-        def validate_ip(*args):
-            if len(args) != 2:
-                raise TypeError("{}() takes exactly one argument ({} given)".format(f.__name__, len(args)-1))
-            ip = args[1]
-            if not isinstance(ip, str):
-                raise TypeError("Expected 'str' not {}".format(str(type(ip))))
-            try:
-                if sum([1 for bit8 in ip.split(".") if 255 >= int(bit8) >= 0]) == 4:
-                    return f(*args)
-                raise ValueError("Input is not a proper Ipv4 address")
-            except ValueError:
-                raise ValueError("Input is not a proper Ipv4 address") from None
-        return validate_ip
 
     @validate
     def add(self, ip) -> bool:
