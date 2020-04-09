@@ -1,4 +1,4 @@
-from util.RadixTree import RadixTree
+from ip_model.util.RadixTree import RadixTree
 
 
 class Ipv4:

@@ -65,11 +65,13 @@ class RadixTree:
                 if ip[i] == "0":
                     if self.left is None:
                         self._add_left(ip[i:])
+                        flag = True
                         break
                     self = self.left
                 else:
                     if self.right is None:
                         self._add_right(ip[i:])
+                        flag = True
                         break
                     self = self.right
             i += 1

@@ -1,4 +1,4 @@
-from Ipv4 import Ipv4
+from ip_model.Ipv4 import Ipv4
 
 if __name__ == "__main__":
     tree = Ipv4()
