@@ -1,4 +1,4 @@
-from ip_model.util.Exceptions import InvalidIp
+from ip_model.Exceptions import InvalidIp
 
 
 class Validator:
@@ -15,10 +15,12 @@ class Validator:
             try:
                 valid = sum([1 for bit8 in ip.split(".") if 255 >= int(bit8) >= 0]) == 4
             except ValueError:
-                raise InvalidIp("Input is not a proper Ipv4 address") from None
+                error_msg = "{} is not a proper Ipv4 address".format(ip)
+                raise InvalidIp(error_msg) from None
             else:
                 if valid:
                     return f(*args)
-                raise InvalidIp("Input is not a proper Ipv4 address")
+                error_msg = "{} is not a proper Ipv4 address".format(ip)
+                raise InvalidIp(error_msg)
 
         return validate_ip
