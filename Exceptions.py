@@ -1,5 +1,10 @@
+import sys
+import traceback
+
+
 class InvalidIp(Exception):
     __module__ = Exception.__module__
+    sys.excepthook = lambda type, value, tb: traceback.print_last(1)
 
     def __init__(self, *args):
         if args:

@@ -14,15 +14,11 @@ class RadixTree:
     def _print_data(self):
         print(self.data, end=" ")
         if self.left:
+            print("-L-",end="")
             self.left.print_data()
         if self.right:
+            print("-R-",end="")
             self.right.print_data()
-
-    '''
-    :argument ip, Accepts an IP as a string
-    :return True, if element added successfully
-            False, if failed
-    '''
 
     def add(self, ip):
         return self._add_ip(ip)
@@ -54,13 +50,15 @@ class RadixTree:
                             self._add_right(ip[i+j-1:])
                             flag = True
                             break
+                i += j
+                if i == 32:
+                    flag = True
                 if flag:
                     break
                 if ip[i] == "0":
                     self = self.left
                 else:
                     self = self.right
-                i += j
             else:
                 if ip[i] == "0":
                     if self.left is None:
@@ -77,11 +75,6 @@ class RadixTree:
             i += 1
         return flag
 
-    '''
-    :argument ip, Accepts an IP as a string
-    :return True, if element was removed
-            False, if failed, or if element not present
-    '''
     def remove(self, ip) -> bool:
         self._remove_ip("N" + ip)
 
