@@ -1,5 +1,5 @@
 from ip_model.Ipv4 import Ipv4
-from ip_model.Exceptions import InvalidIp
+from ip_model.Exceptions import InvalidIpException
 
 if __name__ == "__main__":
     sample = Ipv4()
@@ -20,7 +20,8 @@ if __name__ == "__main__":
 
     try:
         sample.add("....")
-    except InvalidIp as te:
+    except InvalidIpException as te:
         print(te)
 
+    # This statement will throw an InvalidIp Exception
     sample.add("192.168.0.985")

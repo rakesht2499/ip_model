@@ -2,7 +2,7 @@ import sys
 import traceback
 
 
-class InvalidIp(Exception):
+class InvalidIpException(Exception):
     __module__ = Exception.__module__
     sys.excepthook = lambda type, value, tb: traceback.print_last(1)
 
