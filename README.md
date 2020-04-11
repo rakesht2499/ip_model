@@ -1,48 +1,51 @@
+[![](https://img.shields.io/badge/pypi-v1.0.0-blue.svg)](https://pypi.org/project/ip-model/)
+[![License](https://img.shields.io/pypi/l/ansicolortags.svg)](https://github.com/rakesht2499/Ip-Model/blob/master/LICENSE/)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ip-model)
+
 # Ip-Model
 
-A simple implementation of RadixTree used for efficiently for storing, removing and checking in O(1) time for all Ipv4 addresses.
-
-## How to run sample program
-
-#### Pre-requisite
-- Python3
-
-#### How to run
-```shell script
-python3 Sample.py
-```
+A Data Structure for efficiently storing, removing and checking all Ipv4 addresses in O(1) time.
 
 ## Usage
 
-Initialization
 ```python
-from ip_model import Ipv4
+from ip_model.Ipv4 import Ipv4
 
-blasklist = Ipv4.Ipv4()
+blacklist = Ipv4()
 ```
 
-Adding an IP
+### To add an IP:
+
 ```python
-# argument: String (Eg., 10.0.0.1)
-# returns: boolean
-blacklist.add(ip)
+# arg: String
+blacklist.add("192.0.0.18")
 ```
 
-Removing an IP
+### To remove an IP:
+
 ```python
-# argument: String
-# returns: boolean
-blacklist.remove(ip)
+# arg: String
+blacklist.remove("192.0.0.18")
 ```
 
-Checking if present
+### To check if an IP is present/not:
+
 ```python
-# argument: String
-# returns: boolean
-blacklist.is_present(ip)
+# arg: String
+# returns: bool
+blacklist.is_present("192.0.0.18")
 ```
 
+### Exception Handling
 
-Upcoming Support : 
-1) Ipv6
-2) CIDR ranges
+- Throws `TypeError`: passing Invalid Datatype, incorrect number of arguments
+- Throws `InvalidIpException`: When an invalid Ip is passed
+
+```python
+from ip_model.Exceptions import InvalidIpException
+
+try:
+    blacklist.add("192.455.554.343")
+except InvalidIpException:
+    print("Incorrect Ipv4 Address")
+```
