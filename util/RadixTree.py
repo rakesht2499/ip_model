@@ -1,3 +1,9 @@
+"""
+@Copyrights 2020 Rakesh Kumar T
+author: Rakesh Kumar T
+github: rakesht2499
+"""
+
 class RadixTree:
     def __init__(self, data):
         self.data = data

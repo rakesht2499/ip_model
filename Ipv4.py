@@ -1,3 +1,9 @@
+"""
+@Copyrights 2020 Rakesh Kumar T
+author: Rakesh Kumar T
+github: rakesht2499
+"""
+
 from ip_model.util.RadixTree import RadixTree
 from ip_model.util.Validator import Validator
 validate = Validator.validate
