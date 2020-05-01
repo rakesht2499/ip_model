@@ -1,5 +1,5 @@
-[![](https://img.shields.io/badge/pypi-v1.0.0-blue.svg)](https://pypi.org/project/ip-model/)
-[![License](https://img.shields.io/pypi/l/ansicolortags.svg)](https://github.com/rakesht2499/Ip-Model/blob/master/LICENSE/)
+[![](https://img.shields.io/badge/pypi-v1.0.1-blue.svg)](https://pypi.org/project/ip-model/)
+[![License](https://img.shields.io/badge/Licence-Apache--2.0-orange)](https://github.com/rakesht2499/Ip-Model/blob/master/LICENSE/)
 
 # Ip-Model
 
