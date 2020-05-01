@@ -1,23 +1,31 @@
 """
 @Copyrights 2020 Rakesh Kumar T
-author: Rakesh Kumar T
 github: rakesht2499
 """
 
 from ip_model.Exceptions import InvalidIpException
+from ipaddress import ip_network
+
+
+def _argument_error(f, *args):
+    if len(args) != 2:
+        type_error = "{}() takes exactly one argument ({} given)".format(f.__name__, len(args) - 1)
+        raise TypeError(type_error)
+
+
+def _instance_error(ip):
+    if not isinstance(ip, str):
+        type_error = "Expected 'str' not {}".format(str(type(ip)))
+        raise TypeError(type_error)
 
 
 class Validator:
     @staticmethod
     def validate(f):
         def validate_ip(*args):
-            if len(args) != 2:
-                type_error = "{}() takes exactly one argument ({} given)".format(f.__name__, len(args) - 1)
-                raise TypeError(type_error)
+            _argument_error(f, *args)
             ip = args[1]
-            if not isinstance(ip, str):
-                type_error = "Expected 'str' not {}".format(str(type(ip)))
-                raise TypeError(type_error)
+            _instance_error(ip)
             try:
                 valid = sum([1 for bit8 in ip.split(".") if 255 >= int(bit8) >= 0]) == 4
             except ValueError:
@@ -30,3 +38,19 @@ class Validator:
                 raise InvalidIpException(error_msg)
 
         return validate_ip
+
+    @staticmethod
+    def validate_cidr(f):
+        def validate_network(*args):
+            _argument_error(f, *args)
+            cidr = args[1]
+            _instance_error(cidr)
+            try:
+                ip_network(cidr)
+            except ValueError:
+                error_msg = "{} is not a proper Ipv4 address".format(cidr)
+                raise InvalidIpException(error_msg)
+            else:
+                return f(*args)
+
+        return validate_network

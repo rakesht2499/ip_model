@@ -1,4 +1,4 @@
-[![](https://img.shields.io/badge/pypi-v1.0.1-blue.svg)](https://pypi.org/project/ip-model/)
+[![](https://img.shields.io/badge/pypi-v1.1.0-blue.svg)](https://pypi.org/project/ip-model/)
 [![License](https://img.shields.io/badge/Licence-Apache--2.0-orange)](https://github.com/rakesht2499/Ip-Model/blob/master/LICENSE/)
 
 # Ip-Model
@@ -35,6 +35,22 @@ blacklist.remove("192.0.0.18")
 blacklist.is_present("192.0.0.18")
 ```
 
+### To add CIDR - Ipv4:
+
+```python
+# arg: String
+blacklist.add_cidr("192.92.53.0/24")
+```
+*Note: Overlapping CIDR's are accepted. 
+
+### To remove CIDR - Ipv4:
+
+```python
+# arg: String
+blacklist.remove_cidr("192.92.53.0/24")
+```
+*Note: Currently the whole range of IP's will be removed even if it was added as a part of an overlapping entry
+
 ### Exception Handling
 
 - Throws `TypeError`: passing Invalid Datatype, incorrect number of arguments
@@ -47,4 +63,10 @@ try:
     blacklist.add("192.455.554.343")
 except InvalidIpException:
     print("Incorrect Ipv4 Address")
+
+# For CIDR
+try:
+    blacklist.add("192.12.65.0/16")
+except InvalidIpException:
+    print("Incorrect CIDR")
 ```

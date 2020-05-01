@@ -53,3 +53,19 @@ if __name__ == "__main__":
     print(verify_templete.format(ip3, tree.is_present(ip3)))
     print(verify_templete.format(ip4, tree.is_present(ip4)))
     print(verify_templete.format(ip5, tree.is_present(ip5)))
+
+    print(tree.add_cidr("192.168.52.0/24"))
+
+    is_cidr_inserted = True
+    for x in range(0,256):
+        is_cidr_inserted = is_cidr_inserted and tree.is_present("192.168.52."+str(x))
+
+    print("All cidr range present : {}".format(str(is_cidr_inserted)))
+
+    print(tree.remove_cidr("192.168.52.0/24"))
+
+    is_cidr_removed = True
+    for x in range(0,256):
+        is_cidr_removed = is_cidr_removed or tree.is_present("192.168.52."+str(x))
+
+    print("All cidr range removed : {}".format(str(is_cidr_removed)))
