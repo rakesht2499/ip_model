@@ -1,30 +1,23 @@
 """
 @Copyrights 2020 Rakesh Kumar T
-author: Rakesh Kumar T
 github: rakesht2499
 """
 
+
 class RadixTree:
-    def __init__(self, data):
+    def __init__(self, data, left=None, right=None):
         self.data = data
-        self.left = None
-        self.right = None
-
-    def _add_left(self, data):
-        self.left = RadixTree(data)
-
-    def _add_right(self, data):
-        self.right = RadixTree(data)
+        self.children = [left, right]
 
     # For development purpose alone
     def _print_data(self):
         print(self.data, end=" ")
-        if self.left:
-            print("-L-",end="")
-            self.left.print_data()
-        if self.right:
-            print("-R-",end="")
-            self.right.print_data()
+        if self.children[0]:
+            print("-L-", end="")
+            self.children[0].print_data()
+        if self.children[1]:
+            print("-R-", end="")
+            self.children[1].print_data()
 
     def add(self, ip):
         return self._add_ip(ip)
@@ -38,53 +31,30 @@ class RadixTree:
                     if y == ip[i+j-1]:
                         continue
                     else:
-                        if ip[i+j-1] == "0":
-                            self._split_node(j, "right")
-                            self._add_left(ip[i+j-1:])
-                            flag = True
-                            break
-                        else:
-                            self._split_node(j, "left")
-                            self._add_right(ip[i+j-1:])
+                        split_node = RadixTree(self.data[j:], self.children[0], self.children[1])
+                        index = int(ip[i+j-1])
+                        opp_index = int(not bool(index))
+                        self.children[opp_index] = split_node
+                        self.data = self.data[:j]
+                        self.children[index] = RadixTree(ip[i+j-1:])
                         flag = True
                         break
                 i += j
-                if i == 32:
-                    flag = True
-                if flag:
-                    break
-                if ip[i] == "0":
-                    self = self.left
-                else:
-                    self = self.right
+                if i == 32 or flag:
+                    return True
+                self = self.children[int(ip[i])]
             else:
-                if ip[i] == "0":
-                    if self.left is None:
-                        self._add_left(ip[i:])
-                        flag = True
-                        break
-                    self = self.left
-                else:
-                    if self.right is None:
-                        self._add_right(ip[i:])
-                        flag = True
-                        break
-                    self = self.right
+                child = int(ip[i])
+                if self.children[child] is None:
+                    self.children[child] = RadixTree(ip[i:])
+                    flag = True
+                    break
+                self = self.children[child]
             i += 1
         return flag
 
-    def _split_node(self, start_index, side):
-        split_node = RadixTree(self.data[start_index:])
-        split_node.left = self.left
-        split_node.right = self.right
-        if side == "left":
-                self.left = split_node
-        else:
-            self.right = split_node
-        self.data = self.data[:start_index]
-
     def remove(self, ip) -> bool:
-            self._remove_ip("N" + ip)
+        self._remove_ip("N" + ip)
 
     def _remove_ip(self, ip):
         i = 0
@@ -102,23 +72,13 @@ class RadixTree:
                         return
                 i += j
             if i == 32:
-                if prev_node[1] == "L":
-                    prev_node[0].left = None
-                else:
-                    prev_node[0].right = None
+                prev_node[0].children[prev_node[1]] = None
                 return
-            if ip[i + 1] == "0":
-                prev_node = [self, "L"]
-                if self.left:
-                    self = self.left
-                else:
-                    return
+            prev_node = [self, int(ip[i+1])]
+            if self.children[int(ip[i+1])]:
+                self = self.children[int(ip[i+1])]
             else:
-                prev_node = [self, "R"]
-                if self.right:
-                    self = self.right
-                else:
-                    return
+                return
             i += 1
 
     '''
@@ -138,23 +98,14 @@ class RadixTree:
                     return False
             elif len(self.data) > 1:
                 for j, bit in enumerate(self.data):
-                    if ip[i+j] == bit:
-                        continue
-                    else:
+                    if ip[i+j] != bit:
                         return False
                 i += j
             if i == 32:
                 return True
-            if ip[i + 1] == "0":
-                if self.left:
-                    self = self.left
-                else:
-                    return False
+            if self.children[int(ip[i+1])]:
+                self = self.children[int(ip[i+1])]
             else:
-                if self.right:
-                    self = self.right
-                else:
-                    return False
+                return False
             i += 1
         return True
-

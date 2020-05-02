@@ -1,6 +1,5 @@
 """
 @Copyrights 2020 Rakesh Kumar T
-author: Rakesh Kumar T
 github: rakesht2499
 """
 
