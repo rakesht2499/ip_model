@@ -39,23 +39,15 @@ class RadixTree:
                         continue
                     else:
                         if ip[i+j-1] == "0":
-                            split_node = RadixTree(self.data[j:])
-                            split_node.left = self.left
-                            split_node.right = self.right
-                            self.right = split_node
-                            self.data = self.data[:j]
+                            self._split_node(j, "right")
                             self._add_left(ip[i+j-1:])
                             flag = True
                             break
                         else:
-                            split_node = RadixTree(self.data[j:])
-                            split_node.left = self.left
-                            split_node.right = self.right
-                            self.left = split_node
-                            self.data = self.data[:j]
+                            self._split_node(j, "left")
                             self._add_right(ip[i+j-1:])
-                            flag = True
-                            break
+                        flag = True
+                        break
                 i += j
                 if i == 32:
                     flag = True
@@ -81,8 +73,18 @@ class RadixTree:
             i += 1
         return flag
 
+    def _split_node(self, start_index, side):
+        split_node = RadixTree(self.data[start_index:])
+        split_node.left = self.left
+        split_node.right = self.right
+        if side == "left":
+                self.left = split_node
+        else:
+            self.right = split_node
+        self.data = self.data[:start_index]
+
     def remove(self, ip) -> bool:
-        self._remove_ip("N" + ip)
+            self._remove_ip("N" + ip)
 
     def _remove_ip(self, ip):
         i = 0
