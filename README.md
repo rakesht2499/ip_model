@@ -49,7 +49,10 @@ blacklist.add_cidr("192.92.53.0/24")
 # arg: String
 blacklist.remove_cidr("192.92.53.0/24")
 ```
-*Note: Currently the whole range of IP's will be removed even if it was added as a part of an overlapping entry
+
+*Note: Currently the range of IP's will be removed even if it was added as a part of an overlapping entry
+The catch here is, the call for how to handle with overlapping CIDR's must be taken by the service using this DS. 
+The DataStructure receives the request on what to do with the given data
 
 ### Exception Handling
 
