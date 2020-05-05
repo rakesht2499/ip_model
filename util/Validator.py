@@ -4,7 +4,7 @@ github: rakesht2499
 """
 
 from ip_model.Exceptions import InvalidIpException
-from ipaddress import ip_network
+from ipaddress import ip_network, ip_address
 
 
 def _argument_error(f, *args):
@@ -36,6 +36,22 @@ class Validator:
                     return f(*args)
                 error_msg = "{} is not a proper Ipv4 address".format(ip)
                 raise InvalidIpException(error_msg)
+
+        return validate_ip
+
+    @staticmethod
+    def validateIpv6(f):
+        def validate_ip(*args):
+            _argument_error(f, *args)
+            ip = args[1]
+            _instance_error(ip)
+            try:
+                ip_address(ip)
+            except ValueError:
+                error_msg = "{} is not a proper Ipv4 address".format(ip)
+                raise InvalidIpException(error_msg) from None
+            else:
+                return f(*args)
 
         return validate_ip
 

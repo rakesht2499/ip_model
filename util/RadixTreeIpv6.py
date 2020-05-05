@@ -101,19 +101,3 @@ class RadixTreeIpv6:
                 return False
             i += 1
         return True
-
-def convert_RadixTreeIpv6(ip):
-    sums = 0
-    for i, val in enumerate(ip):
-        if val == "":
-            val = "0"
-        sums |= int(val,16)<<(16*(7-i))
-    return str(sums)
-
-def convert_ipv4(ip):
-    ip = ip.split(".")
-    sums = 0
-    # Below given loop in simpler terms : ip[0]<<24 | ip[1]<<16 | ip[2]<<8 | ip[3]<<0
-    for i, val in enumerate(ip):
-        sums |= int(val)<<(8*(3-i))
-    return str(sums)
