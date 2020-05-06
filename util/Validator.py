@@ -40,7 +40,7 @@ class Validator:
         return validate_ip
 
     @staticmethod
-    def validateIpv6(f):
+    def validate_ipv6(f):
         def validate_ip(*args):
             _argument_error(f, *args)
             ip = args[1]
@@ -48,7 +48,7 @@ class Validator:
             try:
                 ip_address(ip)
             except ValueError:
-                error_msg = "{} is not a proper Ipv4 address".format(ip)
+                error_msg = "{} is not a proper Ipv6 address".format(ip)
                 raise InvalidIpException(error_msg) from None
             else:
                 return f(*args)
@@ -64,7 +64,7 @@ class Validator:
             try:
                 ip_network(cidr)
             except ValueError:
-                error_msg = "{} is not a proper Ipv4 address".format(cidr)
+                error_msg = "{} is not a proper Ip address".format(cidr)
                 raise InvalidIpException(error_msg)
             else:
                 return f(*args)

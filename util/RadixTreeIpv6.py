@@ -33,25 +33,22 @@ class RadixTreeIpv6:
                 i += j
                 if i == len(ip) or flag:
                     break
-                self = self.children[int(ip[i])]
-            else:
-                child = int(ip[i])
-                if self.children[child] is None:
-                    self.children[child] = RadixTreeIpv6(ip[i:])
-                    flag = True
-                    break
-                self = self.children[child]
+            child = int(ip[i])
+            if self.children[child] is None:
+                self.children[child] = RadixTreeIpv6(ip[i:])
+                flag = True
+                break
+            self = self.children[int(ip[i])]
             i += 1
         return flag
 
     def remove(self, ip) -> bool:
-        self._remove_ip("N" + ip)
+        self._remove_ip("N"+ip)
 
     def _remove_ip(self, ip):
         i = 0
         prev_node = []
-        # We iterate till 32 as we need to exclude the root node
-        while i <= 10:
+        while i < len(ip):
             if len(self.data) == 1:
                 if ip[i] != self.data:
                     return False
@@ -62,7 +59,7 @@ class RadixTreeIpv6:
                     else:
                         return
                 i += j
-            if i == 10:
+            if i == len(ip)-1:
                 prev_node[0].children[prev_node[1]] = None
                 return
             prev_node = [self, int(ip[i + 1])]
@@ -72,19 +69,13 @@ class RadixTreeIpv6:
                 return
             i += 1
 
-    '''
-    :argument ip, Accepts an IP as a string
-    :return True, if element is present
-            False, if not present
-    '''
-
     def is_present(self, ip) -> bool:
-        return self._check_data("N" + ip)
+        return self._check_data("N"+ip)
 
     def _check_data(self, ip):
         i = 0
         # We iterate till 32 as we need to exclude the root node
-        while i <= len(ip)-1:
+        while i < len(ip):
             if len(self.data) == 1:
                 if ip[i] != self.data:
                     return False
@@ -95,8 +86,8 @@ class RadixTreeIpv6:
                 i += j
             if i == len(ip)-1:
                 return True
-            if self.children[int(ip[i + 1])]:
-                self = self.children[int(ip[i + 1])]
+            if self.children[int(ip[i+1])]:
+                self = self.children[int(ip[i+1])]
             else:
                 return False
             i += 1
