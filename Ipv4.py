@@ -27,11 +27,11 @@ class Ipv4:
     @validate
     def remove(self, ip) -> bool:
         bin_ip = self._to_binary(ip)
-        return self.head.remove(bin_ip)
+        self.head.remove(bin_ip)
 
     @validate_cidr
     def remove_cidr(self, cidr) -> bool:
-        return self._remove_cidr(cidr)
+        self._remove_cidr(cidr)
 
     @validate
     def is_present(self, ip) -> bool:
@@ -51,7 +51,5 @@ class Ipv4:
         return ins
 
     def _remove_cidr(self, cidr) -> bool:
-        rm = True
         for ip in ip_network(cidr):
-            rm = rm and self.remove(str(ip))
-        return rm
+            self.remove(str(ip))

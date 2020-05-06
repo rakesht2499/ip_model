@@ -7,7 +7,9 @@ A Data Structure for efficiently storing, removing and checking all Ipv4 address
 
 ## Usage
 
-## Ipv4
+## Single Ip's
+
+### Ipv4
 
 ```python
 from ip_model.Ipv4 import Ipv4
@@ -15,21 +17,21 @@ from ip_model.Ipv4 import Ipv4
 blacklist = Ipv4()
 ```
 
-### To add an IP:
+#### To add an IP:
 
 ```python
 # arg: String
 blacklist.add("192.0.0.18")
 ```
 
-### To remove an IP:
+#### To remove an IP:
 
 ```python
 # arg: String
 blacklist.remove("192.0.0.18")
 ```
 
-### To check if an IP is present/not:
+#### To check if an IP is present/not:
 
 ```python
 # arg: String
@@ -37,7 +39,7 @@ blacklist.remove("192.0.0.18")
 blacklist.is_present("192.0.0.18")
 ```
 
-## Ipv6
+### Ipv6
 
 ```python
 from ip_model.Ipv4 import Ipv6
@@ -45,21 +47,21 @@ from ip_model.Ipv4 import Ipv6
 blacklist = Ipv6()
 ```
 
-### To add an IP:
+#### To add an IP:
 
 ```python
 # arg: String
 blacklist.add("192::18")
 ```
 
-### To remove an IP:
+#### To remove an IP:
 
 ```python
 # arg: String
 blacklist.remove("192:ffff:e034::23")
 ```
 
-### To check if an IP is present/not:
+#### To check if an IP is present/not:
 
 ```python
 # arg: String
@@ -91,10 +93,28 @@ blacklist.add_cidr("192.92.53.0/255.255.255.252")
 blacklist.remove_cidr("192.92.53.0/24")
 ```
 
-*Note:
+### Ipv6:
 
-The tradeoff is, the call for how to handle with overlapping CIDR's must be taken by the service using the DS. 
-The DataStructure only performs the requested operation with the given data
+#### To Add
+
+```python
+# arg: String
+blacklist.add_cidr("8653:53fe::/122/24")
+```
+
+#### To remove:
+
+```python
+# arg: String
+blacklist.remove_cidr("8653:53fe::/122")
+```
+
+> Note:
+>
+> The tradeoff is, the call for how to handle with overlapping CIDR's must be taken by the service using the DS. 
+> The DataStructure only performs the requested operation with the given data
+
+
 
 ### Exception Handling
 
