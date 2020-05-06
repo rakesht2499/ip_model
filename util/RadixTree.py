@@ -24,8 +24,12 @@ class RadixTree:
 
     def _add_ip(self, ip):
         i = 0
+        flag = False
         while i < len(ip):
-            flag = False
+            if i == 0 and self.children[int(ip[0])] is None:
+                self.children[int(ip[0])] = RadixTree(ip)
+                flag = True
+                break
             if len(self.data) > 1:
                 for j, y in enumerate(self.data):
                     if y == ip[i+j-1]:
@@ -40,16 +44,13 @@ class RadixTree:
                         flag = True
                         break
                 i += j
+                """
+                 * i becomes 32 is all the data is same, flag becomes true if the tree was split
+                 * i becomes 32 & flag becomes true if there is a split in the last node
+                """
                 if i == 32 or flag:
                     return True
-                self = self.children[int(ip[i])]
-            else:
-                child = int(ip[i])
-                if self.children[child] is None:
-                    self.children[child] = RadixTree(ip[i:])
-                    flag = True
-                    break
-                self = self.children[child]
+            self = self.children[int(ip[i])]
             i += 1
         return flag
 
