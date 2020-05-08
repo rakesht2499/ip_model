@@ -136,3 +136,6 @@ except InvalidIpException:
     print("Incorrect CIDR")
 ```
 
+***
+## Section For Geeks
+Click [here](https://github.com/rakesht2499/ip_model/wiki) for ip-model: Under the Hood
