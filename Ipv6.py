@@ -3,7 +3,7 @@
 github: rakesht2499
 """
 
-from ip_model.util.RadixTreeIpv6 import RadixTreeIpv6
+from ip_model.util.Ipv6Tree import Ipv6Tree
 from ip_model.util.Validator import Validator
 from ipaddress import ip_address, ip_network
 
@@ -13,7 +13,7 @@ validate_cidr = Validator.validate_cidr
 
 class Ipv6:
     def __init__(self):
-        self.head = RadixTreeIpv6("N")
+        self.head = Ipv6Tree()
 
     @validate
     def add(self, ip) -> bool:

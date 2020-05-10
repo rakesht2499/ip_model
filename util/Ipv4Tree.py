@@ -4,43 +4,48 @@ github: rakesht2499
 """
 
 
-class RadixTree:
+class Node:
     def __init__(self, data, left=None, right=None):
         self.data = data
         self.children = [left, right]
 
+
+class Ipv4Tree:
+    def __init__(self):
+        self.head = Node("N")
+
     # For development purpose alone
-    def _print_data(self):
-        print(self.data, end=" ")
-        if self.children[0]:
+    def _print_data(self, head):
+        print(head.data, end=" ")
+        if head.children[0]:
             print("-L-", end="")
-            self.children[0].print_data()
-        if self.children[1]:
+            self._print_data(head.children[0])
+        if head.children[1]:
             print("-R-", end="")
-            self.children[1].print_data()
+            self._print_data(head.children[1])
 
     def add(self, ip):
-        return self._add_ip(ip)
+        return self._add_ip(self.head, ip)
 
-    def _add_ip(self, ip):
+    def _add_ip(self, head, ip):
         i = 0
         flag = False
         while i < len(ip):
-            if i == 0 and self.children[int(ip[0])] is None:
-                self.children[int(ip[0])] = RadixTree(ip)
+            if i == 0 and head.children[int(ip[0])] is None:
+                head.children[int(ip[0])] = Node(ip)
                 flag = True
                 break
-            if len(self.data) > 1:
-                for j, y in enumerate(self.data):
+            if len(head.data) > 1:
+                for j, y in enumerate(head.data):
                     if y == ip[i+j-1]:
                         continue
                     else:
-                        split_node = RadixTree(self.data[j:], self.children[0], self.children[1])
+                        split_node = Node(head.data[j:], head.children[0],head.children[1])
                         index = int(ip[i+j-1])
                         opp_index = int(not bool(index))
-                        self.children[opp_index] = split_node
-                        self.data = self.data[:j]
-                        self.children[index] = RadixTree(ip[i+j-1:])
+                        head.children[opp_index] = split_node
+                        head.data = head.data[:j]
+                        head.children[index] = Node(ip[i+j-1:])
                         flag = True
                         break
                 i += j
@@ -50,23 +55,23 @@ class RadixTree:
                 """
                 if i == 32 or flag:
                     return True
-            self = self.children[int(ip[i])]
+            head = head.children[int(ip[i])]
             i += 1
         return flag
 
     def remove(self, ip) -> bool:
-        self._remove_ip("N" + ip)
+        self._remove_ip(self.head, "N" + ip)
 
-    def _remove_ip(self, ip):
+    def _remove_ip(self, head, ip):
         i = 0
         prev_node = []
         # We iterate till 32 as we need to exclude the root node
         while i <= 32:
-            if len(self.data) == 1:
-                if ip[i] != self.data:
+            if len(head.data) == 1:
+                if ip[i] != head.data:
                     return False
-            elif len(self.data) > 1:
-                for j, bit in enumerate(self.data):
+            elif len(head.data) > 1:
+                for j, bit in enumerate(head.data):
                     if ip[i+j] == bit:
                         continue
                     else:
@@ -75,9 +80,9 @@ class RadixTree:
             if i == 32:
                 prev_node[0].children[prev_node[1]] = None
                 return
-            prev_node = [self, int(ip[i+1])]
-            if self.children[int(ip[i+1])]:
-                self = self.children[int(ip[i+1])]
+            prev_node = [head, int(ip[i+1])]
+            if head.children[int(ip[i+1])]:
+                head = head.children[int(ip[i+1])]
             else:
                 return
             i += 1
@@ -88,24 +93,24 @@ class RadixTree:
             False, if not present
     '''
     def is_present(self, ip) -> bool:
-        return self._check_data("N" + ip)
+        return self._check_data(self.head, "N" + ip)
 
-    def _check_data(self, ip):
+    def _check_data(self, head, ip):
         i = 0
         # We iterate till 32 as we need to exclude the root node
         while i <= 32:
-            if len(self.data) == 1:
-                if ip[i] != self.data:
+            if len(head.data) == 1:
+                if ip[i] != head.data:
                     return False
-            elif len(self.data) > 1:
-                for j, bit in enumerate(self.data):
+            elif len(head.data) > 1:
+                for j, bit in enumerate(head.data):
                     if ip[i+j] != bit:
                         return False
                 i += j
             if i == 32:
                 return True
-            if self.children[int(ip[i+1])]:
-                self = self.children[int(ip[i+1])]
+            if head.children[int(ip[i+1])]:
+                head = head.children[int(ip[i+1])]
             else:
                 return False
             i += 1
