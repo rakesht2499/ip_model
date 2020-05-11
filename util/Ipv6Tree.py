@@ -19,7 +19,7 @@ class Ipv6Tree:
 
     def _add_ip(self, head, ip):
         i = 0
-        while i < len(ip):
+        while i <= 39:
             flag = False
             if len(head.data) > 1:
                 for j, y in enumerate(head.data):
@@ -53,7 +53,7 @@ class Ipv6Tree:
     def _remove_ip(self, head, ip):
         i = 0
         prev_node = []
-        while i < len(ip):
+        while i <= 39:
             if len(head.data) == 1:
                 if ip[i] != head.data:
                     return False
@@ -80,7 +80,7 @@ class Ipv6Tree:
     def _check_data(self, head, ip):
         i = 0
         # We iterate till 32 as we need to exclude the root node
-        while i < len(ip):
+        while i <= 39:
             if len(head.data) == 1:
                 if ip[i] != head.data:
                     return False

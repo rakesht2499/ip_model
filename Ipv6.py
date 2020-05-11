@@ -49,4 +49,4 @@ class Ipv6:
             self.remove(str(ip))
 
     def _to_num(self, ip):
-        return str(int(ip_address(ip)))
+        return str(int(ip_address(ip))).rjust(39,"0")
