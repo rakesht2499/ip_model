@@ -64,7 +64,7 @@ class Validator:
             try:
                 ip_network(cidr)
             except ValueError:
-                error_msg = "{} is not a proper Ip address".format(cidr)
+                error_msg = "{} is not a proper CIDR".format(cidr)
                 raise InvalidIpException(error_msg)
             else:
                 return f(*args)

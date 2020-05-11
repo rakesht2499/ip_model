@@ -5,6 +5,23 @@
 
 A Data Structure for efficiently storing, removing and checking all Ipv4 addresses in O(1) time.
 
+## Pre-requisite
+
+* pytest
+
+## How to Test
+
+```shell script
+cd tests/
+pytest
+```
+
+### For generating a html report of tests
+```shell script
+cd tests/
+pytest --html=report.html
+```
+
 ## Usage
 
 ## Single Ip's

@@ -15,9 +15,6 @@ if __name__ == "__main__":
     print(add_template.format(ip))
 
     tree.add(ip)
-    tree.add(ip)
-    tree.add(ip)
-    tree.add(ip)
     print(verify_templete.format(ip, tree.is_present(ip)))
     print(verify_templete.format(ip2, tree.is_present(ip2)))
     print(verify_templete.format(ip2, tree.is_present(ip3)))
