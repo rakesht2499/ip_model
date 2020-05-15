@@ -1,7 +1,7 @@
 from ip_model.Ipv4 import Ipv4
 
 
-class TestIpv4():
+class TestIpv4:
     tree = Ipv4()
     ip1 = "192.168.0.152"
     ip2 = "192.168.0.153"
