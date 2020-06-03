@@ -22,21 +22,57 @@ class Ip(IpObject):
             return self.ipv6
 
     def add(self, ip: str):
+        """
+        Adds the given valid IP
+
+        :param ip: An Ip as String
+        :returns: True for every new addition
+        :raises  :class:`ip_model.Exceptions.InvalidIpException` for invalid IP
+        """
         ipObject = self.__ip_decider(ip)
         return ipObject.add(ip)
 
     def remove(self, ip: str):
+        """
+        Removed the given valid IP
+
+        :param ip: An Ip as String
+        :returns: str: The IP which is removed
+        :raises  :class:`ip_model.Exceptions.InvalidIpException` for invalid IP
+        """
         ipObject = self.__ip_decider(ip)
         return ipObject.remove(ip)
 
     def is_present(self, ip: str):
+        """
+        Checks if a given valid IP is present or not
+
+        :param ip: An Ip as String
+        :returns: True, if the element is present
+                  False, if the element is not present
+        :raises  :class:`ip_model.Exceptions.InvalidIpException` for invalid IP
+        """
         ipObject = self.__ip_decider(ip)
         return ipObject.is_present(ip)
 
     def add_cidr(self, cidr: str):
+        """
+        Adds the given valid IP CIDR
+
+        :param cidr: String in CIDR notation
+        :return: True
+        :raises  :class:`ip_model.Exceptions.InvalidIpException` for invalid IP CIDR
+        """
         ipObject = self.__cidr_decider(cidr)
         return ipObject.add_cidr(cidr)
 
     def remove_cidr(self, cidr: str):
+        """
+        Removes the given valid IP CIDR
+
+        :param cidr: String in CIDR notation
+        :return: str: CIDR range which is removed
+        :raises  :class:`ip_model.Exceptions.InvalidIpException` for invalid IP CIDR
+        """
         ipObject = self.__cidr_decider(cidr)
         return ipObject.remove_cidr(cidr)
