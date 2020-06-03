@@ -1,7 +1,9 @@
+from ip_model.Ip import Ip
 from ip_model.Ipv4 import Ipv4
 from ip_model.Ipv6 import Ipv6
 
 if __name__ == "__main__":
+    temp = Ip()
     tree = Ipv4()
     ip = "192.168.0.152"
     ip2 = "192.168.0.153"
@@ -21,6 +23,7 @@ if __name__ == "__main__":
     print(verify_templete.format(ip2, tree.is_present(ip4)))
 
     print(add_template.format(ip2))
+    tree.add(ip2)
     tree.add(ip2)
     print(verify_templete.format(ip, tree.is_present(ip)))
     print(verify_templete.format(ip2, tree.is_present(ip2)))

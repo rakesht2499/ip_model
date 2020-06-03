@@ -21,6 +21,12 @@ class TestIpv6:
         assert self.tree.is_present(self.ip2) is True
         assert self.tree.is_present(self.ip3) is False
 
+    def test_remove_ip1(self):
+        assert self.tree.remove(self.ip1) is self.ip1
+        assert self.tree.is_present(self.ip1) is False
+        assert self.tree.is_present(self.ip2) is True
+        assert self.tree.is_present(self.ip3) is False
+
     def test_add_cidr(self):
         assert self.tree.add_cidr(self.cidr) is True
         for ip in ip_network(self.cidr):

@@ -1,16 +1,22 @@
-from ip_model.Ipv4 import Ipv4
+from ipaddress import ip_network
+from ip_model.Ip import Ip
 
 
-class TestIpv4:
-    tree = Ipv4()
-    ip1 = "192.168.0.152"
-    ip2 = "192.168.0.153"
-    ip3 = "192.168.0.154"
-    ip4 = "192.168.0.155"
-    ip5 = "192.168.128.155"
-    ip6 = "192.168.128.127"
-    cidr = "192.168.52.0/24"
-    cidr_fixed_part = "192.168.52."
+class TestIp:
+    tree = Ip()
+    ip1 = "192.168.0.52"
+    ip2 = "192.168.0.53"
+    ip3 = "192.168.0.54"
+    ip4 = "192.168.0.55"
+    ip5 = "192.168.128.55"
+    ip6 = "192.168.128.27"
+    cidr = "192.18.52.0/24"
+    cidr_fixed_part = "192.18.52."
+
+    ipv61 = "192::15"
+    ipv62 = "::fff:f345:12"
+    ipv63 = "19:FFE:7::"
+    cidrv6 = "9653:53fe::/122"
 
     def test_add_ip1(self):
         assert self.tree.add(self.ip1) is True
@@ -60,3 +66,31 @@ class TestIpv4:
         self.tree.remove_cidr(self.cidr)
         for x in range(0, 256):
             assert self.tree.is_present(self.cidr_fixed_part + str(x)) is False
+
+    def test_add_ipv61(self):
+        assert self.tree.add(self.ipv61) is True
+        assert self.tree.is_present(self.ipv61) is True
+        assert self.tree.is_present(self.ipv62) is False
+        assert self.tree.is_present(self.ipv63) is False
+
+    def test_add_ipv62(self):
+        assert self.tree.add(self.ipv62) is True
+        assert self.tree.is_present(self.ipv61) is True
+        assert self.tree.is_present(self.ipv62) is True
+        assert self.tree.is_present(self.ipv63) is False
+
+    def test_remove_ipv61(self):
+        assert self.tree.remove(self.ipv61) is self.ipv61
+        assert self.tree.is_present(self.ipv61) is False
+        assert self.tree.is_present(self.ipv62) is True
+        assert self.tree.is_present(self.ipv63) is False
+
+    def test_add_cidrv6(self):
+        assert self.tree.add_cidr(self.cidrv6) is True
+        for ip in ip_network(self.cidrv6):
+            assert self.tree.is_present(str(ip)) is True
+
+    def test_remove_cidrv6(self):
+        assert self.tree.remove_cidr(self.cidrv6) is self.cidrv6
+        for ip in ip_network(self.cidrv6):
+            assert self.tree.is_present(str(ip)) is False
