@@ -15,7 +15,7 @@ class IpTree:
         self.head = Node("N")
 
     def add(self, ip):
-        return self._add_ip(self.head, ip)
+        self._add_ip(self.head, ip)
 
     def _add_ip(self, head, ip):
         i = 0
@@ -38,14 +38,15 @@ class IpTree:
                 i += j
                 if i == len(ip) or flag:
                     break
+            if i == len(ip):
+                return
             child = int(ip[i])
             if head.children[child] is None:
                 head.children[child] = Node(ip[i:])
-                flag = True
                 break
             head = head.children[int(ip[i])]
             i += 1
-        return flag
+        return
 
     def remove(self, ip) -> bool:
         self._remove_ip(self.head, "N"+ip)

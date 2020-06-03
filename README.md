@@ -1,4 +1,4 @@
-[![](https://img.shields.io/badge/pypi-v2.0.1-blue.svg)](https://pypi.org/project/ip-model/)
+[![](https://img.shields.io/badge/pypi-v3.0.0-blue.svg)](https://pypi.org/project/ip-model/)
 [![License](https://img.shields.io/badge/Licence-Apache--2.0-orange)](https://github.com/rakesht2499/Ip-Model/blob/master/LICENSE/)
 
 # Ip-Model
@@ -9,18 +9,6 @@ A Data Structure for efficiently storing, removing and checking all Ipv4 address
 
 * pytest
 
-## How to Test
-
-```shell script
-cd tests/
-pytest
-```
-
-### For generating a html report of tests
-```shell script
-cd tests/
-pytest --html=report.html
-```
 
 ## Usage
 
@@ -38,6 +26,7 @@ blacklist = Ipv4()
 
 ```python
 # arg: String
+# returns: True
 blacklist.add("192.0.0.18")
 ```
 
@@ -45,6 +34,7 @@ blacklist.add("192.0.0.18")
 
 ```python
 # arg: String
+# returns: removed IP
 blacklist.remove("192.0.0.18")
 ```
 
@@ -68,6 +58,7 @@ blacklist = Ipv6()
 
 ```python
 # arg: String
+# returns: True
 blacklist.add("192::18")
 ```
 
@@ -75,6 +66,7 @@ blacklist.add("192::18")
 
 ```python
 # arg: String
+# returns: removed IP
 blacklist.remove("192:ffff:e034::23")
 ```
 
@@ -95,11 +87,13 @@ blacklist.is_present("::5:4fed")
 
 ```python
 # arg: String
+# returns: True
 blacklist.add_cidr("192.92.53.0/24")
 ```
 
 ```python
 # arg: String
+# returns: True
 blacklist.add_cidr("192.92.53.0/255.255.255.252")
 ```
 
@@ -107,6 +101,7 @@ blacklist.add_cidr("192.92.53.0/255.255.255.252")
 
 ```python
 # arg: String
+# returns: removed CIDR
 blacklist.remove_cidr("192.92.53.0/24")
 ```
 
@@ -116,6 +111,7 @@ blacklist.remove_cidr("192.92.53.0/24")
 
 ```python
 # arg: String
+# returns: True
 blacklist.add_cidr("8653:53fe::/122/24")
 ```
 
@@ -123,6 +119,7 @@ blacklist.add_cidr("8653:53fe::/122/24")
 
 ```python
 # arg: String
+# returns: removed CIDR
 blacklist.remove_cidr("8653:53fe::/122")
 ```
 
@@ -132,6 +129,33 @@ blacklist.remove_cidr("8653:53fe::/122")
 > The DataStructure only performs the requested operation with the given data
 
 
+### Ip Class (From v3.0.0)
+
+Handles both Ipv4 and Ipv6
+
+```python
+from ip_model.Ip import Ip
+
+blacklist = Ip()
+```
+
+#### To add an IP:
+
+```python
+# arg: String
+# returns: True
+blacklist.add("192.0.0.18")
+blacklist.add("192::18")
+```
+
+#### To remove an IP:
+
+```python
+# arg: String
+# returns: removed IP
+blacklist.remove("192.0.0.18")
+blacklist.remove("1924::18")
+```
 
 ### Exception Handling
 
@@ -152,6 +176,29 @@ try:
 except InvalidIpException:
     print("Incorrect CIDR")
 ```
+
+## How to Setup
+
+```shell script
+mkdir ip-model && cd ip-model
+git clone git@github.com:rakesht2499/ip_model.git
+# -or -
+git clone https://github.com/rakesht2499/ip_model.git
+```
+
+## How to Test
+
+```shell script
+cd tests/
+pytest
+```
+
+### For generating a html report of tests
+```shell script
+cd tests/
+pytest --html=report.html
+```
+
 
 ***
 ## Section For Geeks

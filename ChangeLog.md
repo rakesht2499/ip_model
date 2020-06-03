@@ -1,5 +1,10 @@
 # ChangeLog
 
+- v3.0.0
+
+Introducing IP class
+Return types for add, remove, add_cidr, remove_cidr have been changed
+
 - v2.0.1
 
 Fix a bug in Ipv6
